@@ -1,0 +1,76 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@model TestingASPPDF.Models.IndexViewModel
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.5.4/contents.css">
+    <script src="~/Scripts/ckeditor.js"></script>
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <title>AspPDF User Manual Chapter 13: ImportFromUrl Sample</title>
+</head>
+<body>
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+
+    <div class="adjoined-bottom">
+        <div class="grid-container">
+            <div class="grid-width-100">
+                <input type="submit" id="savepdf" value="Save As PDF" />
+                <textarea id="editor1" name="editor1">
+                    Hello
+                </textarea>
+                <div id="editor5"></div>
+            </div>
+        </div>
+    </div>
+
+    @MvcHtmlString.Create(ViewBag.PDFDownload)
+   @Html.Hidden("PhoneNumber")
+ 
+}
+
+</body>
+</html>
+
+<script type="text/javascript">
+    window.onload = function () {
+        CKEDITOR.replace('editor1', { enterMode: CKEDITOR.ENTER_BR });
+    };
+    $(document).ready(function () {
+
+        // var doc = new jsPDF();
+
+        //var specialElementHandlers = {
+        //    '#bypassme': function (element, renderer) {
+        //        return true;
+        //    }
+        //};
+
+
+        $('#savepdf').click(function () {
+
+          
+            var editor_data = CKEDITOR.instances.editor1.getData();
+            
+            $('#PhoneNumber').val(editor_data);
+            @*$.ajax({
+                url: '@Url.Action("PDFGenration", "Home")',
+               // dataType: "json",
+                //type: "GET",
+                //contentType: 'application/json; charset=utf-8',
+                //async: true,
+                //processData: false,
+                //cache: false,
+                data:{'HTMLSource':JSON.stringify(editor_data)},
+                success: function (data) {
+                    alert(data);
+                },
+                error: function (xhr) {
+                      @MvcHtmlString.Create(ViewBag.PDFDownload)
+                    alert('error');
+                }
+            });*@
+        });
+    });
+    </script>
